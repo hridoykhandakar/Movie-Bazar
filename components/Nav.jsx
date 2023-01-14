@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import request from "../utils/request";
+import requests from "../utils/requests";
 
 const Nav = () => {
   const router = useRouter();
   return (
     <nav>
       <div className="flex px-10 sm:px20 text-2xl whitespace-nowrap space-x-10 sm:space-x-20 overflow-x-scroll no-scrollbar overflow-y-auto">
-        {Object.entries(request).map(([key, { title, url }]) => (
+        {Object.entries(requests).map(([key, { title, url }]) => (
           <h2
             key={key}
             onClick={() => router.push(`/?genre=${key}`)}

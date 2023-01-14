@@ -1,14 +1,14 @@
 import Head from "next/head";
-import request from "../utils/request";
+import requests from "../utils/requests";
 
 import { Inter } from "@next/font/google";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
+import Results from "../components/Results";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home(props) {
-  console.log(props);
+export default function Home({ results }) {
   return (
     <div className="dark">
       <Head>
@@ -23,6 +23,7 @@ export default function Home(props) {
         {/* Nav Bar */}
         <Nav />
         {/* Results */}
+        <Results results={results} />
       </main>
     </div>
   );
@@ -30,15 +31,16 @@ export default function Home(props) {
 
 export async function getServerSideProps(context) {
   const genre = context.query.genre;
-  const requests = await fetch(
+
+  const request = await fetch(
     `https://api.themoviedb.org/3${
-      request[genre]?.url || request.fetchTrending.url
+      requests[genre]?.url || requests.fetchTrending.url
     }`
   ).then((res) => res.json());
 
   return {
     props: {
-      results: requests.results,
+      results: request.results,
     },
   };
 }
